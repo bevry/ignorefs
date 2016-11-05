@@ -1,5 +1,11 @@
 # History
 
+## v1.2.0 2016 November 6
+- Rejigged internals, functionality should remain exactly the same
+  - Documentation is now generated from source code
+  - Added Flow Type Comments
+  - More efficient evaluation of ignore checks
+
 ## v1.1.1 2016 May 2
 - Fixed `browser` field
 
