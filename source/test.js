@@ -1,3 +1,6 @@
+/* @flow */
+'use strict'
+
 // Import
 const {equal} = require('assert-helpers')
 const joe = require('joe')

@@ -1,49 +1,72 @@
+/* @flow */
+'use strict'
+
 // Import
 const pathUtil = require('path')
-const ignorePatterns = require('ignorepatterns')
+const ignorePatterns /* :RegExp */ = require('ignorepatterns')
 
-// Is Ignored Path
-// opts={ignorePaths, ignoreHiddenFiles, ignoreCommonPatterns, ignoreCustomPatterns}
-// returns true/false
-function isIgnoredPath (path, opts) {
+/* ::
+type IgnoreOpts = {
+	ignorePaths?: false | Array<string>,
+	ignoreHiddenFiles?: boolean,
+	ignoreCommonPatterns?: boolean | RegExp,
+	ignoreCustomPatterns?: false | RegExp
+}
+*/
+
+/**
+Is Ignored Path
+Check to see if a path, either a full path or basename, should be ignored
+@param {string} path - a full path or basename of a file or directory
+@param {object} [opts] - configurations options
+@param {false | Array<string>} [opts.ignorePaths] - an optional listing of full paths to ignore
+@param {boolean} [opts.ignoreHiddenFiles] - whether or not to ignore basenames beginning with a "." character
+@param {boolean} [opts.ignoreCommonPatterns] - if true, will check the path and basename of the path against https://github.com/bevry/ignorepatterns
+@param {false | RegExp} [opts.ignoreCustomPatterns] - if a regular expression, will test the regular expression against the path and basename of the path
+@returns {boolean} whether or not the path should be ignored
+*/
+function isIgnoredPath (path /* :string */, opts /* :IgnoreOpts */ = {}) {
 	// Prepare
-	let result = false
 	const basename = pathUtil.basename(path)
 
-	// Defaults
-	if ( !opts )  opts = {}
-	if ( opts.ignorePaths == null )  opts.ignorePaths = false
-	if ( opts.ignoreHiddenFiles == null )  opts.ignoreHiddenFiles = false
-	if ( opts.ignoreCommonPatterns == null )  opts.ignoreCommonPatterns = true
-	if ( opts.ignoreCustomPatterns == null )  opts.ignoreCustomPatterns = false
-
-	// Fetch the common patterns to ignore
-	if ( opts.ignoreCommonPatterns === true ) {
-		opts.ignoreCommonPatterns = ignorePatterns
-	}
-
-	// Test Ignore Paths
+	// Test Paths
 	if ( opts.ignorePaths ) {
-		for ( const ignorePath of opts.ignorePaths ) {
+		for ( let i = 0; i < opts.ignorePaths.length; ++i ) {
+			const ignorePath = opts.ignorePaths[i]
 			if ( path.indexOf(ignorePath) === 0 ) {
-				result = true
-				break
+				return true
 			}
 		}
 	}
 
-	// Test Ignore Patterns
-	result =
-		result ||
-		(opts.ignoreHiddenFiles    && (/^\./).test(basename)) ||
-		(opts.ignoreCommonPatterns && opts.ignoreCommonPatterns.test(basename)) ||
-		(opts.ignoreCommonPatterns && opts.ignoreCommonPatterns.test(path)) ||
-		(opts.ignoreCustomPatterns && opts.ignoreCustomPatterns.test(basename)) ||
-		(opts.ignoreCustomPatterns && opts.ignoreCustomPatterns.test(path)) ||
-		false
+	// Test Hidden Files
+	if ( opts.ignoreHiddenFiles && basename[0] === '.' ) {
+		return true
+	}
+
+	// Test Common Patterns
+	if ( opts.ignoreCommonPatterns == null || opts.ignoreCommonPatterns === true ) {
+		return ignorePatterns.test(path) || (
+			path !== basename && ignorePatterns.test(basename)
+		)
+	}
+	else if ( opts.ignoreCommonPatterns ) {
+		const ignoreCommonPatterns /* :RegExp */ = opts.ignoreCommonPatterns
+		return ignoreCommonPatterns.test(path) || (
+			path !== basename && ignoreCommonPatterns.test(basename)
+		)
+	}
+
+	// Test Custom Patterns
+	if ( opts.ignoreCustomPatterns ) {
+		const ignoreCustomPatterns /* :RegExp */ = opts.ignoreCustomPatterns
+		return ignoreCustomPatterns.test(path) || (
+			path !== basename && ignoreCustomPatterns.test(basename)
+		)
+	}
 
 	// Return
-	return result
+	return false
 }
 
 // Export

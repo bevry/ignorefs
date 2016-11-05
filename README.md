@@ -53,7 +53,7 @@ Ignore common and custom patterns of the file system
 <p>This package is published with the following editions:</p>
 
 <ul><li><code>ignorefs</code> aliases <code>ignorefs/index.js</code> which uses <a href="https://github.com/bevry/editions" title="Editions are the best way to produce and consume packages you care about.">Editions</a> to automatically select the correct edition for the consumers environment</li>
-<li><code>ignorefs/source/index.js</code> is Source + <a href="https://babeljs.io/docs/learn-es2015/" title="ECMAScript Next">ESNext</a> + <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a></li>
+<li><code>ignorefs/source/index.js</code> is Source + <a href="https://babeljs.io/docs/learn-es2015/" title="ECMAScript Next">ESNext</a> + <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> + <a href="http://flowtype.org/blog/2015/02/20/Flow-Comments.html" title="Flow is a static type checker for JavaScript">Flow Type Comments</a></li>
 <li><code>ignorefs/es2015/index.js</code> is <a href="https://babeljs.io" title="The compiler for writing next generation JavaScript">Babel</a> Compiled + <a href="http://babeljs.io/docs/plugins/preset-es2015/" title="ECMAScript 2015">ES2015</a> + <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a></li></ul>
 
 <p>Older environments may need <a href="https://babeljs.io/docs/usage/polyfill/" title="A polyfill that emulates missing ECMAScript environment features">Babel's Polyfill</a> or something similar.</p>
@@ -63,15 +63,7 @@ Ignore common and custom patterns of the file system
 
 ## Usage
 
-``` javascript
-var isIgnored = require('ignorefs').isIgnoredPath(path, {
-	ignorePaths: false, // array of paths to ignore
-	ignoreHiddenFiles: false, // whether or not we should ignore files that start with a dot
-	ignoreCommonPatterns: true, // whether or not we should common patterns like "thumbs.db" etc, uses https://github.com/bevry/ignorepatterns
-	ignoreCustomPatterns: false, // can be a regex that is tested against the basename of the file and the file's path
-});
-console.log(isIgnored);  // true or false
-```
+[API Documentation](http://rawgit.com/bevry/ignorefs/master/docs/index.html)
 
 
 <!-- HISTORY/ -->
@@ -100,7 +92,7 @@ console.log(isIgnored);  // true or false
 
 These amazing people are maintaining this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a></li></ul>
+<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/ignorefs/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/ignorefs">view contributions</a></li></ul>
 
 <h3>Sponsors</h3>
 
@@ -117,8 +109,7 @@ No sponsors yet! Will you be the first?
 
 These amazing people have contributed code to this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a></li>
-<li><a href="https://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/ignorefs/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/ignorefs">view contributions</a></li></ul>
+<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/ignorefs/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/ignorefs">view contributions</a></li></ul>
 
 <a href="https://github.com/bevry/ignorefs/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 
