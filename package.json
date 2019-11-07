@@ -101,7 +101,7 @@
     "test": "node --harmony ./test.js --joe-reporter=console"
   },
   "dependencies": {
-    "editions": "^1.3.3",
+    "editions": "^2.2.0",
     "ignorepatterns": "^1.1.0"
   },
   "devDependencies": {
