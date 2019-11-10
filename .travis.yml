@@ -1,66 +1,25 @@
-# 2016 November 5
-# https://github.com/bevry/base
-
-# Use the latest travis infrastructure
 sudo: false
-
-# https://github.com/nodejs/LTS
 language: node_js
 node_js:
-  - "0.8"   # end of life
-  - "0.10"  # end of life
-  - "0.12"  # maintenance
-  - "4"     # lts
-  - "6"     # lts
-  - "7"     # stable
+- '0.12'
+- '4'
+- '6'
+- '8'
+- '10'
+- '12'
+- '13'
 matrix:
   fast_finish: true
-  allow_failures:
-    - node_js: "0.8"
-    - node_js: "0.10"
-cache:
-  directories:
-    - node_modules
-
-# Ensure npm is up to date
-# Ensure dependencies install with a LTS node version
-install: |
-  export CURRENT_NPM_VERSION="$(npm --version)"
-  export LATEST_NPM_VERSION="$(npm view npm version)"
-  if test "$CURRENT_NPM_VERSION" != "$LATEST_NPM_VERSION"; then
-    echo "running an old npm version, upgrading"
-    npm instal npm --global --cache-min=Infinity
-  fi
-
-  export CURRENT_NODE_VERSION="$(node --version)"
-  export LTS_NODE_VERSIONS="$(nvm ls-remote --lts)"
-  if echo "$LTS_NODE_VERSIONS" | grep "$CURRENT_NODE_VERSION"; then
-    echo "running on a LTS node version, completing setup"
-    npm run our:setup
-  else
-    echo "running on a non-LTS node version, completing setup on a LTS node version"
-    nvm install --lts
-    export LTS_NODE_VERSION="$(node --version)"
-    npm run our:setup
-    nvm use "$TRAVIS_NODE_VERSION"
-  fi
-
-# Ensure compilation and linting occur on an LTS node version
-before_script: |
-  if test "$LTS_NODE_VERSION"; then
-    echo "running on a non-LTS node version, compiling with LTS, skipping linting"
-    nvm use "$LTS_NODE_VERSION"
-    npm run our:compile
-    nvm use "$TRAVIS_NODE_VERSION"
-  else
-    echo "running on a LTS node version, compiling and linting"
-    npm run our:compile && npm run our:verify
-  fi
-
-# Custom notifications
+  allow_failures: []
+cache: npm
+install:
+- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/c91c9d5eef34ecb0e92029667fd5052640225fa3/scripts/node-install.bash)"
+before_script:
+- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/c91c9d5eef34ecb0e92029667fd5052640225fa3/scripts/node-verify.bash)"
+after_success:
+- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/c91c9d5eef34ecb0e92029667fd5052640225fa3/scripts/surge.bash)"
+- eval "$(curl -fsSL https://raw.githubusercontent.com/bevry/awesome-travis/c91c9d5eef34ecb0e92029667fd5052640225fa3/scripts/node-publish.bash)"
 notifications:
-  slack:
-    secure: YMJZe3sWRXPqRufLWFcFgpSuMzp2JiQ2jffo/nhUWQgEw0oB1RS8P+ck7PGld8PBV0pM35tBX8YE8Bm+gI8RgJR9XV7joO8UVse+fUQWRQGO11p2zLqeFiWT2STfgTmb/x8/HV3PEuJ7S37F0ojL9UfnH0dYpjJhvNmD3KzDF04=
   email:
     recipients:
-      secure: SOLybzAtiO91ak2Ev/2xXi2GBdb7X0pnu9vKdYS7xzwfRxJvAFb0A2eZ+4hF6TNdFblm6xdc04Vk9bvXNtNbDTARedvdjkLCDJsfqCvenaO/jRZoG+xYg15ZLx9XpGmB/W2CqQmaFfPHmP88xYWm4q+IDHLM+2Ty0ysxftUedjY=
+      secure: bvKuo1cneNZjIrTwBlgAKHw3dFlajnaho2T2EMwVQVqXFACIBCK7qQrfeQxyWUWtyc2OnYUSpf0P+P2gv/FG83HWsncYUfJ4vQGvmzykJzMVneQ7eH3IDOIzqtV/hf0Tk7FXOd2mAr338MSLjU7yq5tbMmyS4Mn7K3UelMo+07c=

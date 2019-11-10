@@ -25,43 +25,45 @@ Check to see if a path, either a full path or basename, should be ignored
 @param {false | RegExp} [opts.ignoreCustomPatterns] - if a regular expression, will test the regular expression against the path and basename of the path
 @returns {boolean} whether or not the path should be ignored
 */
-function isIgnoredPath (path /* :string */, opts /* :IgnoreOpts */ = {}) {
+function isIgnoredPath(path /* :string */, opts /* :IgnoreOpts */ = {}) {
 	// Prepare
 	const basename = pathUtil.basename(path)
 
 	// Test Paths
-	if ( opts.ignorePaths ) {
-		for ( let i = 0; i < opts.ignorePaths.length; ++i ) {
+	if (opts.ignorePaths) {
+		for (let i = 0; i < opts.ignorePaths.length; ++i) {
 			const ignorePath = opts.ignorePaths[i]
-			if ( path.indexOf(ignorePath) === 0 ) {
+			if (path.indexOf(ignorePath) === 0) {
 				return true
 			}
 		}
 	}
 
 	// Test Hidden Files
-	if ( opts.ignoreHiddenFiles && basename[0] === '.' ) {
+	if (opts.ignoreHiddenFiles && basename[0] === '.') {
 		return true
 	}
 
 	// Test Common Patterns
-	if ( opts.ignoreCommonPatterns == null || opts.ignoreCommonPatterns === true ) {
-		return ignorePatterns.test(path) || (
-			path !== basename && ignorePatterns.test(basename)
+	if (opts.ignoreCommonPatterns == null || opts.ignoreCommonPatterns === true) {
+		return (
+			ignorePatterns.test(path) ||
+			(path !== basename && ignorePatterns.test(basename))
 		)
-	}
-	else if ( opts.ignoreCommonPatterns ) {
+	} else if (opts.ignoreCommonPatterns) {
 		const ignoreCommonPatterns /* :RegExp */ = opts.ignoreCommonPatterns
-		return ignoreCommonPatterns.test(path) || (
-			path !== basename && ignoreCommonPatterns.test(basename)
+		return (
+			ignoreCommonPatterns.test(path) ||
+			(path !== basename && ignoreCommonPatterns.test(basename))
 		)
 	}
 
 	// Test Custom Patterns
-	if ( opts.ignoreCustomPatterns ) {
+	if (opts.ignoreCustomPatterns) {
 		const ignoreCustomPatterns /* :RegExp */ = opts.ignoreCustomPatterns
-		return ignoreCustomPatterns.test(path) || (
-			path !== basename && ignoreCustomPatterns.test(basename)
+		return (
+			ignoreCustomPatterns.test(path) ||
+			(path !== basename && ignoreCustomPatterns.test(basename))
 		)
 	}
 
@@ -70,4 +72,4 @@ function isIgnoredPath (path /* :string */, opts /* :IgnoreOpts */ = {}) {
 }
 
 // Export
-module.exports = {isIgnoredPath}
+module.exports = { isIgnoredPath }
