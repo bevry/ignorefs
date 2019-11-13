@@ -5,7 +5,7 @@
 // Import
 const { equal } = require('assert-helpers')
 const kava = require('kava')
-const ignorefs = require('../')
+const ignorefs = require('./')
 
 // Tests
 kava.suite('ignorefs', function(suite) {
