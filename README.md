@@ -56,7 +56,7 @@ Ignore common and custom patterns of the file system
 
 ## Usage
 
-[API Documentation](http://rawgit.com/bevry/ignorefs/master/docs/index.html)
+[API Documentation](http://master.ignorefs.bevry.surge.sh/docs/)
 
 
 <!-- HISTORY/ -->
