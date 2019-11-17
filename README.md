@@ -42,34 +42,14 @@ Ignore common and custom patterns of the file system
 <li>Require: <code>require('ignorefs')</code></li>
 </ul>
 
-<a href="https://jspm.io" title="Native ES Modules CDN"><h3>jspm</h3></a>
-
-``` html
-<script type="module">
-    import * as pkg from '//dev.jspm.io/ignorefs'
-</script>
-```
-
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
 
 <p>This package is published with the following editions:</p>
 
 <ul><li><code>ignorefs</code> aliases <code>ignorefs/index.js</code> which uses <a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a> to automatically select the correct edition for the consumers environment</li>
-<li><code>ignorefs/source/index.js</code> is esnext source code with require for modules</li>
-<li><code>ignorefs/edition-browsers/index.js</code> is esnext compiled for browsers with require for modules</li>
-<li><code>ignorefs/edition-node-0.12/index.js</code> is esnext compiled for node.js 0.12 with require for modules</li></ul>
-
-<h3><a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a></h3>
-
-This project provides its type information via inline <a href="http://usejsdoc.org" title="JSDoc is an API documentation generator for JavaScript, similar to Javadoc or phpDocumentor">JSDoc Comments</a>. To make use of this in <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a>, set your <code>maxNodeModuleJsDepth</code> compiler option to `5` or thereabouts. You can accomlish this via your `tsconfig.json` file like so:
-
-``` json
-{
-  "compilerOptions": {
-    "maxNodeModuleJsDepth": 5
-  }
-}
-```
+<li><code>ignorefs/source/index.ts</code> is typescript source code with import for modules</li>
+<li><code>ignorefs/edition-node-13/index.js</code> is typescript compiled for node.js 13 with require for modules</li>
+<li><code>ignorefs/edition-node-0.12/index.js</code> is typescript compiled for node.js 0.12 with require for modules</li></ul>
 
 <!-- /INSTALL -->
 
@@ -124,7 +104,8 @@ No sponsors yet! Will you be the first?
 
 These amazing people have contributed code to this project:
 
-<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/ignorefs/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/ignorefs">view contributions</a></li></ul>
+<ul><li><a href="http://balupton.com">Benjamin Lupton</a> — <a href="https://github.com/bevry/ignorefs/commits?author=balupton" title="View the GitHub contributions of Benjamin Lupton on repository bevry/ignorefs">view contributions</a></li>
+<li><a href="http://github.com/apps/dependabot-preview">dependabot-preview[bot]</a> — <a href="https://github.com/bevry/ignorefs/commits?author=dependabot-preview[bot]" title="View the GitHub contributions of dependabot-preview[bot] on repository bevry/ignorefs">view contributions</a></li></ul>
 
 <a href="https://github.com/bevry/ignorefs/blob/master/CONTRIBUTING.md#files">Discover how you can contribute by heading on over to the <code>CONTRIBUTING.md</code> file.</a>
 

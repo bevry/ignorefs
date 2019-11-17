@@ -1,5 +1,10 @@
 # History
 
+## v1.4.1 2019 November 18
+
+-   Converted from Flow Type to TypeSCript
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+
 ## v1.3.0 2019 November 11
 
 -   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)

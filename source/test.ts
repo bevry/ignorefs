@@ -1,17 +1,15 @@
-/* @flow */
 /* eslint camelcase:0 */
-'use strict'
 
 // Import
-const { equal } = require('assert-helpers')
-const kava = require('kava')
-const ignorefs = require('./')
+import { equal } from 'assert-helpers'
+import kava from 'kava'
+import { isIgnoredPath } from './'
 
 // Tests
 kava.suite('ignorefs', function(suite) {
 	suite('common patterns', function(suite, test) {
 		// Prepare
-		const ignoreExpected = {
+		const ignoreExpected: { [key: string]: boolean } = {
 			// Vim
 			'~': true,
 			'~something': true,
@@ -79,7 +77,7 @@ kava.suite('ignorefs', function(suite) {
 				resultExpected ? 'should' : 'should not'
 			} ignore ${path}`
 			test(testName, function() {
-				const resultActual = ignorefs.isIgnoredPath(path)
+				const resultActual = isIgnoredPath(path)
 				equal(resultActual, resultExpected, 'ignored result was as expected')
 			})
 		})
@@ -87,7 +85,7 @@ kava.suite('ignorefs', function(suite) {
 
 	suite('ignore paths', function(suite, test) {
 		// Prepare
-		const ignoreExpected = {
+		const ignoreExpected: { [key: string]: boolean } = {
 			'/usr/awesome': false,
 			'/tmp/awesome': true,
 			'/usr/tmp/awesome': true
@@ -100,7 +98,7 @@ kava.suite('ignorefs', function(suite) {
 				resultExpected ? 'should' : 'should not'
 			} ignore ${path}`
 			test(testName, function() {
-				const resultActual = ignorefs.isIgnoredPath(path, {
+				const resultActual = isIgnoredPath(path, {
 					ignorePaths: ['/tmp', '/usr/tmp']
 				})
 				equal(resultActual, resultExpected, 'ignored result was as expected')
