@@ -86,7 +86,7 @@
   "types": "source/index.ts",
   "main": "edition-node-12/index.js",
   "dependencies": {
-    "ignorepatterns": "^1.4.0"
+    "ignorepatterns": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
