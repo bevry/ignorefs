@@ -6,8 +6,8 @@ import kava from 'kava'
 import { isIgnoredPath } from './'
 
 // Tests
-kava.suite('ignorefs', function(suite) {
-	suite('common patterns', function(suite, test) {
+kava.suite('ignorefs', function (suite) {
+	suite('common patterns', function (suite, test) {
 		// Prepare
 		const ignoreExpected: { [key: string]: boolean } = {
 			// Vim
@@ -67,39 +67,39 @@ kava.suite('ignorefs', function(suite) {
 
 			// Desktop
 			'desktop.ini': true,
-			desktopaini: false
+			desktopaini: false,
 		}
 
 		// Tests
-		Object.keys(ignoreExpected).forEach(function(path) {
+		Object.keys(ignoreExpected).forEach(function (path) {
 			const resultExpected = ignoreExpected[path]
 			const testName = `${
 				resultExpected ? 'should' : 'should not'
 			} ignore ${path}`
-			test(testName, function() {
+			test(testName, function () {
 				const resultActual = isIgnoredPath(path)
 				equal(resultActual, resultExpected, 'ignored result was as expected')
 			})
 		})
 	})
 
-	suite('ignore paths', function(suite, test) {
+	suite('ignore paths', function (suite, test) {
 		// Prepare
 		const ignoreExpected: { [key: string]: boolean } = {
 			'/usr/awesome': false,
 			'/tmp/awesome': true,
-			'/usr/tmp/awesome': true
+			'/usr/tmp/awesome': true,
 		}
 
 		// Tests
-		Object.keys(ignoreExpected).forEach(function(path) {
+		Object.keys(ignoreExpected).forEach(function (path) {
 			const resultExpected = ignoreExpected[path]
 			const testName = `${
 				resultExpected ? 'should' : 'should not'
 			} ignore ${path}`
-			test(testName, function() {
+			test(testName, function () {
 				const resultActual = isIgnoredPath(path, {
-					ignorePaths: ['/tmp', '/usr/tmp']
+					ignorePaths: ['/tmp', '/usr/tmp'],
 				})
 				equal(resultActual, resultExpected, 'ignored result was as expected')
 			})

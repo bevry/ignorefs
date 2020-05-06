@@ -33,6 +33,10 @@ Ignore common and custom patterns of the file system
 <!-- /DESCRIPTION -->
 
 
+## Usage
+
+[Complete API Documentation.](http://master.ignorefs.bevry.surge.sh/docs/globals.html)
+
 <!-- INSTALL/ -->
 
 <h2>Install</h2>
@@ -40,23 +44,19 @@ Ignore common and custom patterns of the file system
 <a href="https://npmjs.com" title="npm is a package manager for javascript"><h3>npm</h3></a>
 <ul>
 <li>Install: <code>npm install --save ignorefs</code></li>
-<li>Require: <code>require('ignorefs')</code></li>
+<li>Import: <code>import * as pkg from ('ignorefs')</code></li>
+<li>Require: <code>const pkg = require('ignorefs')</code></li>
 </ul>
 
 <h3><a href="https://editions.bevry.me" title="Editions are the best way to produce and consume packages you care about.">Editions</a></h3>
 
 <p>This package is published with the following editions:</p>
 
-<ul><li><code>ignorefs/source/index.ts</code> is typescript source code with import for modules</li>
-<li><code>ignorefs</code> aliases <code>ignorefs/edition-node-12/index.js</code></li>
-<li><code>ignorefs/edition-node-12/index.js</code> is typescript compiled for node.js 12 with require for modules</li></ul>
+<ul><li><code>ignorefs/source/index.ts</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> source code with <a href="https://babeljs.io/docs/learn-es2015/#modules" title="ECMAScript Modules">Import</a> for modules</li>
+<li><code>ignorefs</code> aliases <code>ignorefs/edition-esnext/index.js</code></li>
+<li><code>ignorefs/edition-esnext/index.js</code> is <a href="https://www.typescriptlang.org/" title="TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. ">TypeScript</a> compiled against <a href="https://en.wikipedia.org/wiki/ECMAScript#ES.Next" title="ECMAScript Next">ESNext</a> for <a href="https://nodejs.org" title="Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine">Node.js</a> with <a href="https://nodejs.org/dist/latest-v5.x/docs/api/modules.html" title="Node/CJS Modules">Require</a> for modules</li></ul>
 
 <!-- /INSTALL -->
-
-
-## Usage
-
-[API Documentation](http://master.ignorefs.bevry.surge.sh/docs/)
 
 
 <!-- HISTORY/ -->
