@@ -1,5 +1,5 @@
 // Import
-import pathUtil from 'path'
+import * as pathUtil from 'path'
 import ignorePatterns from 'ignorepatterns'
 
 interface IgnoreOpts {
