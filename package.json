@@ -115,7 +115,7 @@
   "main": "edition-esnext/index.js",
   "deno": "edition-deno/index.ts",
   "dependencies": {
-    "ignorepatterns": "4.4.0"
+    "ignorepatterns": "4.8.0"
   },
   "devDependencies": {
     "@bevry/update-contributors": "^1.9.0",

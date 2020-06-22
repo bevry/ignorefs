@@ -1128,10 +1128,10 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-ignorepatterns@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/ignorepatterns/-/ignorepatterns-4.4.0.tgz#01ce450588fa08adcb68d65930527fd5c5da2c25"
-  integrity sha512-ncnHYbVIsPXkAnWDscFwjBmFsT+zvixk1aXzg51GNrK3ck4n48Obk3/O7Yr4U57o2O1KhWa3APSwwI6c9ElTDg==
+ignorepatterns@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/ignorepatterns/-/ignorepatterns-4.8.0.tgz#6adf8401662db1d03166aefe70e98772345a01e8"
+  integrity sha512-no+R4BkmyTrFp1vJJM3GTgmP/lqcxGKvm054HxeMpvn4tzMx2jmoT8u0fOBOz3mZEet2qg/g7i9KgUFcMNxsPQ==
 
 import-fresh@^3.0.0:
   version "3.2.1"
