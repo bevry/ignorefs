@@ -1,16 +1,12 @@
 {
   "title": "IgnoreFS",
   "name": "ignorefs",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "description": "Ignore common and custom patterns of the file system",
   "homepage": "https://github.com/bevry/ignorefs",
   "license": "MIT",
   "keywords": [
     "binary",
-    "deno",
-    "deno-edition",
-    "deno-entry",
-    "denoland",
     "encoding",
     "node",
     "text",
@@ -94,42 +90,27 @@
       "engines": {
         "node": "10 || 12 || 13 || 14"
       }
-    },
-    {
-      "description": "TypeScript source code made to be compatible with Deno",
-      "directory": "edition-deno",
-      "entry": "index.ts",
-      "tags": [
-        "typescript",
-        "import",
-        "deno"
-      ],
-      "engines": {
-        "deno": true,
-        "browsers": false
-      }
     }
   ],
   "types": "./compiled-types/",
   "type": "commonjs",
   "main": "edition-esnext/index.js",
-  "deno": "edition-deno/index.ts",
   "dependencies": {
-    "ignorepatterns": "4.4.0"
+    "ignorepatterns": "4.8.0"
   },
   "devDependencies": {
-    "@bevry/update-contributors": "^1.9.0",
-    "@typescript-eslint/eslint-plugin": "^3.3.0",
-    "@typescript-eslint/parser": "^3.3.0",
-    "assert-helpers": "^6.8.0",
-    "eslint": "^7.3.0",
-    "eslint-config-bevry": "^3.8.0",
-    "eslint-config-prettier": "^6.7.0",
+    "@bevry/update-contributors": "^1.12.0",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
+    "assert-helpers": "^6.13.0",
+    "eslint": "^7.3.1",
+    "eslint-config-bevry": "^3.13.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "kava": "^5.7.0",
-    "make-deno-edition": "^0.9.1",
+    "make-deno-edition": "^0.13.0",
     "prettier": "^2.0.5",
-    "projectz": "^2.9.0",
+    "projectz": "^2.10.1",
     "surge": "^0.21.3",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.5",
