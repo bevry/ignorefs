@@ -3,7 +3,7 @@
 // Import
 import { equal } from 'assert-helpers'
 import kava from 'kava'
-import { isIgnoredPath } from './'
+import { isIgnoredPath } from './index.js'
 
 // Tests
 kava.suite('ignorefs', function (suite) {
