@@ -35,7 +35,7 @@ Ignore common and custom patterns of the file system
 
 ## Usage
 
-[Complete API Documentation.](http://master.ignorefs.bevry.surge.sh/docs/globals.html)
+[Complete API Documentation.](http://master.ignorefs.bevry.surge.sh/docs/)
 
 <!-- INSTALL/ -->
 
