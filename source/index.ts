@@ -1,8 +1,11 @@
-// Import
-import * as pathUtil from 'path'
+// builtin
+import { basename as getBasename } from 'path'
+
+// external
 import ignorePatterns from 'ignorepatterns'
 
-interface IgnoreOpts {
+/** Ignore Options */
+export interface Options {
 	/** An optional listing of full paths to ignore */
 	ignorePaths?: false | Array<string>
 	/** Wether or not to ignore basenames beginning with a `.` character */
@@ -16,13 +19,13 @@ interface IgnoreOpts {
 /**
  * Is Ignored Path
  * Check to see if a path, either a full path or basename, should be ignored
- * @param path A full path or basename of a file or directory
- * @param opts Configurations options
- * @returns Whether or not the path should be ignored
+ * @param path full path or basename of a file or directory
+ * @param opts configuration options
+ * @returns whether or not the path should be ignored
  */
-export function isIgnoredPath(path: string, opts: IgnoreOpts = {}) {
+export function isIgnoredPath(path: string, opts: Options = {}) {
 	// Prepare
-	const basename = pathUtil.basename(path)
+	const basename = getBasename(path)
 
 	// Test Paths
 	if (opts.ignorePaths) {

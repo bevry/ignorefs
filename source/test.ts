@@ -1,8 +1,10 @@
 /* eslint camelcase:0 */
 
-// Import
+// external
 import { equal } from 'assert-helpers'
 import kava from 'kava'
+
+// local
 import { isIgnoredPath } from './index.js'
 
 // Tests
