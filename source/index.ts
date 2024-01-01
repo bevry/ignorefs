@@ -142,32 +142,8 @@ export function isIgnoredPath(
 	return false
 }
 
-/** Compatibility wrapper for {@link isIgnoredPath}, supporting path string, verifying path object and options, and handling option deprecations */
-export default function isIgnoredPathCompatibility(
-	path: Path | string,
-	opts: Options = {
-		ignoreUndesiredBasenames: true,
-	}
-) {
-	// adjust path
-	if (typeof path === 'string') {
-		if (!path) throw new Error('ignorefs: path cannot be empty')
-		const result: Path = {}
-		if (isAbsolute(path)) result.absolutePath = path
-		else result.relativePath = path
-		result.basename = getBasename(path)
-		path = result
-	} else {
-		// verify
-		if (path.absolutePath && !isAbsolute(path.absolutePath))
-			throw new Error('ignorefs: path.absolutePath must be an absolute path')
-		if (path.relativePath && !isRelative(path.relativePath))
-			throw new Error('ignorefs: path.relativePath must be a relative path')
-		if (path.basename && !isBasename(path.basename))
-			throw new Error('ignorefs: path.basename must be a basename')
-	}
-
-	// handle deprecations
+/** Verify options and upgrade deprecations, returns dereferenced copy */
+export function upgradeOptions(opts: Options): Options {
 	opts = Object.assign({}, opts)
 	if (opts.ignoreHiddenFiles != null) {
 		opts.ignoreHiddenBasenames = opts.ignoreHiddenFiles
@@ -216,7 +192,34 @@ export default function isIgnoredPathCompatibility(
 		]
 		delete opts.ignorePaths
 	}
+	return opts
+}
 
-	// return result
-	return isIgnoredPath(path, opts)
+/** Compatibility wrapper for {@link isIgnoredPath}, supporting path string, verifying path object and options, and handling option deprecations */
+export default function isIgnoredPathCompatibility(
+	path: Path | string,
+	opts: Options = {
+		ignoreUndesiredBasenames: true,
+	}
+) {
+	// adjust path
+	if (typeof path === 'string') {
+		if (!path) throw new Error('ignorefs: path cannot be empty')
+		const result: Path = {}
+		if (isAbsolute(path)) result.absolutePath = path
+		else result.relativePath = path
+		result.basename = getBasename(path)
+		path = result
+	} else {
+		// verify
+		if (path.absolutePath && !isAbsolute(path.absolutePath))
+			throw new Error('ignorefs: path.absolutePath must be an absolute path')
+		if (path.relativePath && !isRelative(path.relativePath))
+			throw new Error('ignorefs: path.relativePath must be a relative path')
+		if (path.basename && !isBasename(path.basename))
+			throw new Error('ignorefs: path.basename must be a basename')
+	}
+
+	// upgrade options and return result from modern api
+	return isIgnoredPath(path, upgradeOptions(opts))
 }

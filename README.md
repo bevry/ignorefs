@@ -48,7 +48,7 @@ Ignore common and custom patterns of the file system
 ### [Deno](https://deno.land "Deno is a secure runtime for JavaScript and TypeScript, it is an alternative for Node.js")
 
 ``` typescript
-import * as pkg from 'https://unpkg.com/ignorefs@^5.0.2/edition-deno/index.ts'
+import * as pkg from 'https://unpkg.com/ignorefs@^5.0.3/edition-deno/index.ts'
 ```
 ### [Editions](https://editions.bevry.me "Editions are the best way to produce and consume packages you care about.")
 

@@ -1,5 +1,10 @@
 # History
 
+## v5.0.3 2024 January 2
+
+-   Added `upgradeOptions` export so that options can be upgraded once before calling `isIgnorePath` multiple times
+-   Thank you to the sponsors: [Andrew Nesbitt](https://nesbitt.io), [Balsa](https://balsa.com), [Codecov](https://codecov.io), [Poonacha Medappa](https://poonachamedappa.com), [Rob Morris](https://github.com/Rob-Morris), [Sentry](https://sentry.io), [Syntax](https://syntax.fm)
+
 ## v5.0.2 2024 January 2
 
 -   Compatibility layer now also exclusively handles deprecations and verifications
