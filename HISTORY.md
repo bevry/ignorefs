@@ -1,10 +1,27 @@
 # History
 
-## v4.8.0 2023 December 31
+## v5.0.0 2024 January 2
 
+-   Rewrote to coincide with the v8 rewrite of [scandirectory](https://github.com/bevry/scandirectory), which if you use the default export it will remain backwards compatible
+-   Solves `ignoreCustomPatterns` requiring `ignoreCommonPatterns` to be `false`
+    -   Closes [issue #2017](https://github.com/bevry/ignorefs/issues/3) by [julrichkieffer](https://github.com/julrichkieffer)
+-   Adds `ignoreCustomCallback` enabling custom ignore logic, such as adopting a globber or whatever
+    -   Closes [issue #2](https://github.com/bevry/ignorefs/issues/2)
+    -   Closes [issue bevry/watchr#44](https://github.com/bevry/watchr/issues/44) by [Vaughan Rouesnel](https://github.com/vjpr) and [C Dorn](https://github.com/cadorn)
+-   `isIgnorePath` export now accepts a `Path` object comprising of `absolutePath`, `relativePath`, and `basename` for specific filtering
+    -   `default` export can also accept a traditional `string`, which will fill `absolutePath`, `relativePath`, and resolve `basename`
+-   Added `ignoreAbsolutePaths`, `ignoreRelativePaths`, and `ignoreBasenames` options to match specific forms of the path, against a prefix or a RegExp, with b/c for `ignorePaths` to append to each of them
+-   `ignoreHiddenFiles` renamed with b/c to `ignoreHiddenBasenames` to match its expectation, as it only evaluates basenames not paths
+-   `ignoreCommonPatterns` renamed with b/c to `ignoreUndesiredBasenames` to match its expectation, as it only evaluates basenames not paths
+    -   `ignoreCommonPatterns` now only accepts a boolean (no longer accepts a regular expression), use `ignoreCustomPatterns` or `ignoreCustomCallback` instead
 -   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
 -   Thank you to the sponsors: [Andrew Nesbitt](https://nesbitt.io), [Balsa](https://balsa.com), [Codecov](https://codecov.io), [Poonacha Medappa](https://poonachamedappa.com), [Rob Morris](https://github.com/Rob-Morris), [Sentry](https://sentry.io), [Syntax](https://syntax.fm)
+
+## v4.8.0 2023 December 31
+
 -   Export Options type
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+-   Thank you to the sponsors: [Andrew Nesbitt](https://nesbitt.io), [Balsa](https://balsa.com), [Codecov](https://codecov.io), [Poonacha Medappa](https://poonachamedappa.com), [Rob Morris](https://github.com/Rob-Morris), [Sentry](https://sentry.io), [Syntax](https://syntax.fm)
 
 ## v4.6.0 2023 December 30
 
