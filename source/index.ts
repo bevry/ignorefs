@@ -1,8 +1,20 @@
 // builtin
-import { basename as getBasename, isAbsolute } from 'path'
+import { basename as getBasename, isAbsolute, sep } from 'path'
 
 // external
 import undesiredBasenamesRegExp from 'ignorepatterns'
+
+/** Is the path relative? */
+function isRelative(path: string): boolean {
+	if (!path) return false
+	return !isAbsolute(path)
+}
+
+/** Is the path a basename? */
+function isBasename(path: string): boolean {
+	if (!path) return false
+	return !path.includes(sep)
+}
 
 /** A path to check its ignore status */
 export interface Path {
@@ -10,7 +22,7 @@ export interface Path {
 	absolutePath?: string
 	/** The relative path, if any */
 	relativePath?: string
-	/** If not provided, will be determined from {@link absolutePath}/{@link relativePath} */
+	/** If basename of the path, if any */
 	basename?: string
 }
 
@@ -22,17 +34,17 @@ export interface Options {
 	ignoreRelativePaths?: Array<string | RegExp>
 	/** Basenames to ignore */
 	ignoreBasenames?: Array<string | RegExp>
-	/** @deprecated alias for {@link ignoreAbsolutePaths}, {@link ignoreRelativePaths}, and {@link ignoreBasenames} */
+	/** @deprecated alias for {@link isIgnoredPathCompatibility} that puts absolute paths in {@link ignoreAbsolutePaths}, relative paths in {@link ignoreRelativePaths}, and basenames in {@link ignoreBasenames} */
 	ignorePaths?: Array<string | RegExp>
 
 	/** Ignore basenames that begin with a `.` character */
 	ignoreHiddenBasenames?: boolean
-	/** @deprecated alias for {@link Options.ignoreHiddenBasenames} */
+	/** @deprecated aliases {@link Options.ignoreHiddenBasenames} for {@link isIgnoredPathCompatibility} */
 	ignoreHiddenFiles?: boolean
 
 	/** Ignore commonly undesirable basenames: https://github.com/bevry/ignorepatterns */
 	ignoreUndesiredBasenames?: boolean
-	/** @deprecated alias for {@link Options.ignoreUndesiredBasenames} */
+	/** @deprecated aliases {@link Options.ignoreUndesiredBasenames} for {@link isIgnoredPathCompatibility} */
 	ignoreCommonPatterns?: boolean
 
 	/** Test against each {@link Path} property */
@@ -56,34 +68,25 @@ function matches(path: string, matches: Array<string | RegExp>): boolean {
 export function isIgnoredPath(
 	path: Path,
 	opts: Options = {
-		ignoreCommonPatterns: true,
+		ignoreUndesiredBasenames: true,
 	}
 ) {
 	// handle deprecations
-	opts = {
-		ignoreHiddenBasenames: opts.ignoreHiddenFiles,
-		ignoreUndesiredBasenames: opts.ignoreCommonPatterns,
-		...opts,
-		ignoreAbsolutePaths: [
-			...(opts.ignoreAbsolutePaths || []),
-			...(opts.ignorePaths || []),
-		],
-		ignoreRelativePaths: [
-			...(opts.ignoreRelativePaths || []),
-			...(opts.ignorePaths || []),
-		],
-		ignoreBasenames: [
-			...(opts.ignoreBasenames || []),
-			...(opts.ignorePaths || []),
-		],
-	}
+	if (opts.ignoreHiddenFiles != null)
+		throw new Error(
+			'ignorefs: ignoreHiddenFiles is deprecated, use ignoreHiddenBasenames instead, otherwise use the default export for a compatibility layer'
+		)
+	if (opts.ignoreCommonPatterns != null)
+		throw new Error(
+			'ignorefs: ignoreCommonPatterns is deprecated, use ignoreUndesiredBasenames instead, otherwise use the default export for a compatibility layer'
+		)
+	if (opts.ignorePaths != null)
+		throw new Error(
+			'ignorefs: ignorePaths is deprecated, use ignoreAbsolutePaths, ignoreRelativePaths, and ignoreBasenames instead, otherwise use the default export for a compatibility layer'
+		)
 
-	// extract path, fallback basename, and reconstruct path with its custom properties if any (helpful for scandirectory)
-	const { absolutePath, relativePath } = path
-	let { basename } = path
-	if (!basename && (absolutePath || relativePath))
-		basename = getBasename(absolutePath || relativePath || '')
-	path = { ...path, basename }
+	// extract components of the path
+	const { absolutePath, relativePath, basename } = path
 
 	// custom callback
 	if (opts.ignoreCustomCallback && opts.ignoreCustomCallback(path) === true)
@@ -99,11 +102,7 @@ export function isIgnoredPath(
 			return true
 
 		// custom?
-		if (
-			opts.ignoreCustomPatterns &&
-			opts.ignoreCustomPatterns.test(absolutePath)
-		)
-			return true
+		if (opts.ignoreCustomPatterns?.test(absolutePath)) return true
 	}
 
 	// relative path checks
@@ -116,11 +115,7 @@ export function isIgnoredPath(
 			return true
 
 		// custom?
-		if (
-			opts.ignoreCustomPatterns &&
-			opts.ignoreCustomPatterns.test(relativePath)
-		)
-			return true
+		if (opts.ignoreCustomPatterns?.test(relativePath)) return true
 	}
 
 	// basename checks
@@ -140,26 +135,88 @@ export function isIgnoredPath(
 			return true
 
 		// custom?
-		if (opts.ignoreCustomPatterns && opts.ignoreCustomPatterns.test(basename))
-			return true
+		if (opts.ignoreCustomPatterns?.test(basename)) return true
 	}
 
 	// not ignored
 	return false
 }
 
-/** Compatibility wrapper for {@link isIgnoredPath} */
+/** Compatibility wrapper for {@link isIgnoredPath}, supporting path string, verifying path object and options, and handling option deprecations */
 export default function isIgnoredPathCompatibility(
 	path: Path | string,
-	opts?: Options
+	opts: Options = {
+		ignoreUndesiredBasenames: true,
+	}
 ) {
+	// adjust path
 	if (typeof path === 'string') {
+		if (!path) throw new Error('ignorefs: path cannot be empty')
 		const result: Path = {}
 		if (isAbsolute(path)) result.absolutePath = path
 		else result.relativePath = path
 		result.basename = getBasename(path)
-		return isIgnoredPath(result, opts)
+		path = result
 	} else {
-		return isIgnoredPath(path, opts)
+		// verify
+		if (path.absolutePath && !isAbsolute(path.absolutePath))
+			throw new Error('ignorefs: path.absolutePath must be an absolute path')
+		if (path.relativePath && !isRelative(path.relativePath))
+			throw new Error('ignorefs: path.relativePath must be a relative path')
+		if (path.basename && !isBasename(path.basename))
+			throw new Error('ignorefs: path.basename must be a basename')
 	}
+
+	// handle deprecations
+	opts = Object.assign({}, opts)
+	if (opts.ignoreHiddenFiles != null) {
+		opts.ignoreHiddenBasenames = opts.ignoreHiddenFiles
+		delete opts.ignoreHiddenFiles
+	}
+	if (opts.ignoreCommonPatterns != null) {
+		opts.ignoreUndesiredBasenames = opts.ignoreCommonPatterns
+		delete opts.ignoreCommonPatterns
+	}
+	if (opts.ignorePaths) {
+		opts.ignoreAbsolutePaths = [
+			...(opts.ignoreAbsolutePaths || []).map((match) => {
+				if (typeof match === 'string' && !isAbsolute(match))
+					throw new Error(
+						'ignorefs: ignoreAbsolutePaths should only contain absolute paths and regular expressions'
+					)
+				return match
+			}),
+			...(opts.ignorePaths || []).filter((match) =>
+				typeof match === 'string' ? isAbsolute(match) : true
+			),
+		]
+		opts.ignoreRelativePaths = [
+			...(opts.ignoreRelativePaths || []).map((match) => {
+				if (typeof match === 'string' && !isRelative(match))
+					throw new Error(
+						'ignorefs: ignoreRelativePaths should only contain relative paths and regular expressions'
+					)
+				return match
+			}),
+			...(opts.ignorePaths || []).filter((match) =>
+				typeof match === 'string' ? isRelative(match) : true
+			),
+		]
+		opts.ignoreBasenames = [
+			...(opts.ignoreBasenames || []).map((match) => {
+				if (typeof match === 'string' && !isBasename(match))
+					throw new Error(
+						'ignorefs: ignoreBasenames should only contain basebanes and regular expressions'
+					)
+				return match
+			}),
+			...(opts.ignorePaths || []).filter((match) =>
+				typeof match === 'string' ? isBasename(sep) : true
+			),
+		]
+		delete opts.ignorePaths
+	}
+
+	// return result
+	return isIgnoredPath(path, opts)
 }
