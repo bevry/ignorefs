@@ -1,5 +1,5 @@
 // builtin
-import { basename as getBasename } from 'path'
+import { basename as getBasename, isAbsolute } from 'path'
 
 // external
 import undesiredBasenamesRegExp from 'ignorepatterns'
@@ -153,11 +153,13 @@ export default function isIgnoredPathCompatibility(
 	path: Path | string,
 	opts?: Options
 ) {
-	if (typeof path === 'string')
-		path = {
-			absolutePath: path,
-			relativePath: path,
-			basename: getBasename(path),
-		}
-	return isIgnoredPath(path, opts)
+	if (typeof path === 'string') {
+		const result: Path = {}
+		if (isAbsolute(path)) result.absolutePath = path
+		else result.relativePath = path
+		result.basename = getBasename(path)
+		return isIgnoredPath(result, opts)
+	} else {
+		return isIgnoredPath(path, opts)
+	}
 }

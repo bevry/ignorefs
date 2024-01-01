@@ -5,7 +5,8 @@ import { equal } from 'assert-helpers'
 import kava from 'kava'
 
 // local
-import { isIgnoredPath } from './index.js'
+import isIgnoredPathCompatibility, { isIgnoredPath } from './index.js'
+import { deepEqual } from 'assert'
 
 // Tests
 kava.suite('ignorefs', function (suite, test) {
@@ -123,5 +124,26 @@ kava.suite('ignorefs', function (suite, test) {
 			}
 		)
 		equal(resultActual, true, 'ignored result was as expected')
+	})
+
+	suite('compatibility layer works', function (suite, test) {
+		test('absolute', function () {
+			const resultActual = isIgnoredPathCompatibility('/something', {
+				ignoreCustomCallback(path) {
+					deepEqual(path, { absolutePath: '/something', basename: 'something' })
+					return true
+				},
+			})
+			equal(resultActual, true, 'ignored result was as expected')
+		})
+		test('relative', function () {
+			const resultActual = isIgnoredPathCompatibility('something', {
+				ignoreCustomCallback(path) {
+					deepEqual(path, { relativePath: 'something', basename: 'something' })
+					return true
+				},
+			})
+			equal(resultActual, true, 'ignored result was as expected')
+		})
 	})
 })
