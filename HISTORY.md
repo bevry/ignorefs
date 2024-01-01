@@ -1,5 +1,10 @@
 # History
 
+## v5.0.1 2024 January 2
+
+-   Compatibility layer sets `absolutePath` and `relativePath` appropriately
+-   Thank you to the sponsors: [Andrew Nesbitt](https://nesbitt.io), [Balsa](https://balsa.com), [Codecov](https://codecov.io), [Poonacha Medappa](https://poonachamedappa.com), [Rob Morris](https://github.com/Rob-Morris), [Sentry](https://sentry.io), [Syntax](https://syntax.fm)
+
 ## v5.0.0 2024 January 2
 
 -   Rewrote to coincide with the v8 rewrite of [scandirectory](https://github.com/bevry/scandirectory), which if you use the default export it will remain backwards compatible
